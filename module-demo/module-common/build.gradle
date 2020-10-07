@@ -1,0 +1,46 @@
+//plugins {
+//    id 'org.springframework.boot' version '2.3.4.RELEASE'
+//    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+//    id 'java'
+//}
+//
+//group = 'com.starlord.module'
+//version = '0.0.1-SNAPSHOT'
+//sourceCompatibility = '1.8'
+//
+//repositories {
+//    mavenCentral()
+//}
+
+//dependencies {
+//    implementation 'org.springframework.boot:spring-boot-starter'
+//    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+//        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+//    }
+//}
+
+//test {
+//    useJUnitPlatform()
+//}
+
+
+//bootRepackage {
+//    enabled = false
+//}
+
+// Main 메서드가 없는 모듈은 bootJar, jar 설정을 해야 한다.
+bootJar {
+    enabled = false
+}
+jar {
+    enabled = true
+}
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile('org.springframework.boot:spring-boot-starter-jdbc')
+
+//    compile('com.h2database:h2') //
+    runtime('com.h2database:h2') // 주저장소가 아니라 테스트용이라, 불필요하게 컴파일 의존성에 포함될 필요가 없다.
+    runtimeOnly ('mysql:mysql-connector-java')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}

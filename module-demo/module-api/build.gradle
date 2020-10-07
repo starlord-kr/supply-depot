@@ -1,0 +1,19 @@
+//apply plugin: 'jar'
+// 하위 프로젝트별 필요한 의존성들만 추가하면된다.
+dependencies {
+
+//    compile project(":module-common")
+
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-web-services'
+    compile 'org.springframework.boot:spring-boot-starter-webflux'
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+//    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+//        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+//    }
+//    testImplementation 'io.projectreactor:reactor-test'
+}
+
+//test {
+//    useJUnitPlatform()
+//}

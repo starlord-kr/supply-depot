@@ -1,0 +1,70 @@
+server:
+  error:
+    whitelabel:
+      enabled: false
+  port: 8080
+  tomcat:
+    uri-encoding: UTF-8
+    accesslog:
+#      directory: /log/..
+      enabled: true
+      pattern: "%t %{X-B3-TraceId}i [%r] [%U] [%s] [%b] [%a] [%T] [%{User-Agent}i] [%{Referer}i]"
+      prefix: access
+      rotate: true
+      suffix: .log
+      rename-on-rotate: true
+    connection-timeout: 3s
+    threads:
+      max: 100
+
+spring:
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
+#  profiles:
+#    active: local
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  mvc:
+    dispatch-options-request: true
+    dispatch-trace-request: true
+    throw-exception-if-no-handler-found: true
+  #    view:
+  #      prefix: static/
+  #      suffix: .html
+  jackson:
+    locale: ko_KR
+    time-zone: Asia/Seoul
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  datasource:
+    hikari:
+      driver-class-name: org.h2.Driver
+#      jdbc-url: jdbc:h2:mem:~/testdb;DB_CLOSE_ON_EXIT=TRUE;IFEXISTS=TRUE
+#      jdbc-url: jdbc:h2:mem:~/testdb;DB_CLOSE_ON_EXIT=TRUE
+      jdbc-url: jdbc:h2:~/testdb;DB_CLOSE_ON_EXIT=TRUE;DB_CLOSE_DELAY=-1 # pick
+      pool-name: TEST-SPRING-BOOT-JPA
+      username: testuser
+      password: testuser
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+#        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        format_sql: true
+    hibernate:
+      ddl-auto: create-drop
+
+logging:
+  level:
+    root: INFO
+    io.lettuce.core: INFO
+    org.apache.catalina: INFO
+    org.apache.coyote: INFO
+    org.apache.tomcat: INFO
+    org.springframework: INFO
+    org.springframework.cache: INFO
+    org.springframework.data: INFO

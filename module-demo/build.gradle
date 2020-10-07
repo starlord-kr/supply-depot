@@ -1,0 +1,135 @@
+// Move to buildscript - dependencies
+//plugins {
+//    id 'org.springframework.boot' version '2.3.4.RELEASE'
+//    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+//    id 'java'
+//}
+
+// Move to subprojects
+//group = 'com.starlord'
+//version = '0.0.1-SNAPSHOT'
+//sourceCompatibility = '1.8'
+
+//configurations {
+//    compileOnly {
+//        extendsFrom annotationProcessor
+//    }
+//}
+
+//repositories {
+//    mavenCentral()
+//}
+
+//dependencies {
+//    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+//    annotationProcessor 'org.projectlombok:lombok'
+//
+//    compileOnly 'org.projectlombok:lombok'
+//
+//    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+//
+//    implementation 'org.springframework.boot:spring-boot-starter'
+//
+//    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+//        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+//    }
+//}
+
+//test {
+//    useJUnitPlatform()
+//}
+
+// Added for module
+allprojects {
+    group = 'com.starlord'
+    version = '0.0.1-SNAPSHOT'
+}
+
+// Added for module
+// 외부라이브러리 추가
+buildscript {
+    ext {
+        springBootVersion = '2.3.4.RELEASE'
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath ("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.10.RELEASE"
+    }
+}
+
+// Added for module
+// 하위 프로젝트에만 적용되는 빌드스크립트
+subprojects {
+
+    group = 'com.starlord'
+    version = '0.0.1-SNAPSHOT'
+
+    apply plugin: 'java'
+//    apply plugin: 'eclipse'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    // 위치가 중요하다 ㅋㅋ
+    sourceCompatibility = '1.8'
+
+    repositories {
+        mavenCentral()
+    }
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+    dependencies {
+        annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+        annotationProcessor 'org.projectlombok:lombok'
+
+        compileOnly 'org.projectlombok:lombok'
+//        developmentOnly 'org.springframework.boot:spring-boot-devtools'
+        implementation 'org.springframework.boot:spring-boot-starter'
+
+        testCompile group: 'junit', name: 'junit', version: '4.12'
+        testImplementation('org.springframework.boot:spring-boot-starter-test') {
+            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        }
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+
+    task initSourceFolders {
+        sourceSets*.java.srcDirs*.each {
+            if( !it.exists() ) {
+                it.mkdirs()
+            }
+        }
+
+        sourceSets*.resources.srcDirs*.each {
+            if( !it.exists() ) {
+                it.mkdirs()
+            }
+        }
+    }
+}
+
+// Added for module
+// : 이 들어간 이유는 Root 아래의 프로젝트를 구분하기 위함
+project(':module-api') {
+    dependencies {
+        compile project(':module-common')
+    }
+}
+
+project(':module-web') {
+    dependencies {
+        compile project(':module-common')
+    }
+}
