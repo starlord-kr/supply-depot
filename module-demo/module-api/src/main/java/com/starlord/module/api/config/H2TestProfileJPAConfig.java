@@ -11,7 +11,8 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableJpaRepositories(basePackages = {
-        "com.starlord.module.common.student"
+        "com.starlord.module.common.student",
+        "com.starlord.module.common.review"
 })
 @EnableTransactionManagement
 public class H2TestProfileJPAConfig {

@@ -40,7 +40,11 @@ spring:
     console:
       enabled: true
       path: /h2-console
+      settings:
+        trace: false
+        web-allow-others: false
   datasource:
+    data: classpath:h2/import.sql
     hikari:
       driver-class-name: org.h2.Driver
 #      jdbc-url: jdbc:h2:mem:~/testdb;DB_CLOSE_ON_EXIT=TRUE;IFEXISTS=TRUE
@@ -49,14 +53,17 @@ spring:
       pool-name: TEST-SPRING-BOOT-JPA
       username: testuser
       password: testuser
+    type: com.zaxxer.hikari.HikariDataSource
   jpa:
     show-sql: true
     properties:
       hibernate:
-#        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        dialect: org.hibernate.dialect.H2Dialect
+        # dialect: org.hibernate.dialect.MySQL5InnoDBDialect
         format_sql: true
     hibernate:
       ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.H2Dialect
 
 logging:
   level:

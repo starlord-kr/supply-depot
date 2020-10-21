@@ -1,11 +1,11 @@
 spring:
   datasource:
+    data: classpath:sql/import.sql
     hikari:
       platform: h2
       url: jdbc:h2:mem:dsp;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
       type: com.zaxxer.hikari.HikariDataSource
       driver-class-name: org.h2.Driver
-      data: classpath:sql/import.sql
       #      jdbc-url: jdbc:h2:mem:~/testdb;DB_CLOSE_ON_EXIT=TRUE;IFEXISTS=TRUE
       #      jdbc-url: jdbc:h2:mem:~/testdb;DB_CLOSE_ON_EXIT=TRUE
       jdbc-url: jdbc:h2:~/testdb;DB_CLOSE_ON_EXIT=TRUE;DB_CLOSE_DELAY=-1 # pick
