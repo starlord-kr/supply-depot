@@ -15,6 +15,5 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Member findFirstMemberByIdAfterAndReviewer(Long id, Admin reviewer);
 
 //    Page<Member> findAllByReviewer(Admin reviewer, Pageable pageable);
-
 }
 

@@ -22,6 +22,7 @@ VALUES
 (10, 'member10', 28, 3)
 ;
 
+
 -- STUDENT
 INSERT INTO STUDENT(id, name, age)
 VALUES
